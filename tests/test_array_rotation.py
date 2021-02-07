@@ -20,6 +20,7 @@ class TestArrayRotation:
         assert array[0] == 1
         assert array[1] == 2
 
+
     @pytest.mark.parametrize('size, items, index', [
         (2, [1, None], 3),
         (3, [10], 1),
@@ -32,6 +33,7 @@ class TestArrayRotation:
         with raises(IndexOutOfBoundError):
             array[index]
 
+
     @pytest.mark.parametrize('size, items', [
         (2, [1, 2]),
         (3, [None, False, 'test']),
@@ -43,6 +45,7 @@ class TestArrayRotation:
         each(array.append, items)
 
         assert array.clone() == items
+
 
     def test_append(self):
         array = CircularArray(size=6)
@@ -66,6 +69,7 @@ class TestArrayRotation:
         array.append(None)
         assert array[5] == None
 
+
     def test_append_raises_error(self):
         array = CircularArray(size=2)
 
@@ -74,6 +78,7 @@ class TestArrayRotation:
 
         with raises(SizeLimitExceededError):
             array.append(3)
+
 
     def test_get(self):
         array = CircularArray(size=3)
@@ -86,6 +91,7 @@ class TestArrayRotation:
         assert array.get(1) == 5
         assert array.get(2) == 10
 
+
     @pytest.mark.parametrize('size, items, index', [
         (2, [1, None], 3),
         (3, [10], 1),
@@ -97,6 +103,7 @@ class TestArrayRotation:
 
         with raises(IndexOutOfBoundError):
             array.get(index)
+
 
     def test_rotate_right_once(self):
         items = [1, 2, 3]
@@ -112,6 +119,7 @@ class TestArrayRotation:
 
         array.rotate_right_once()
         assert array.clone() == [1, 2, 3]
+
 
     def test_rotate_left_once(self):
         items = [1, 2, 3]
