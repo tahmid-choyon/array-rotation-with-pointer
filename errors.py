@@ -4,3 +4,7 @@ class SizeLimitExceededError(Exception):
 
 class IndexOutOfBoundError(Exception):
     pass
+
+
+class EmptyArrayError(Exception):
+    pass

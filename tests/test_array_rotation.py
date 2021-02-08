@@ -165,3 +165,58 @@ class TestArrayRotation:
             array.rotate_left_once()
 
         assert array.to_list() == final_array
+
+
+    def test_append_after_rotation(self):
+        array_to_rotate_right = CircularArray(size=4)
+        each(array_to_rotate_right.append, [1, 2, 3])
+
+        array_to_rotate_right.rotate_right_once()
+
+        each(array_to_rotate_right.append, [4])
+
+        assert array_to_rotate_right.to_list() == [3, 1, 2, 4]
+
+        array_to_rotate_left = CircularArray(size=4)
+        each(array_to_rotate_left.append, [1, 2, 3])
+
+        array_to_rotate_left.rotate_left_once()
+
+        each(array_to_rotate_left.append, [4])
+
+        assert array_to_rotate_left.to_list() == [2, 3, 1, 4]
+
+
+    def test_pop(self):
+        array = CircularArray(size=3)
+        each(array.append, [1, 2, 3])
+
+        popped_item = array.pop()
+
+        assert popped_item == 3
+        assert array.to_list() == [1, 2]
+
+
+    def test_pop_within_rotation(self):
+        array_to_rotate_right = CircularArray(size=3)
+        each(array_to_rotate_right.append, [1, 2, 3])
+
+        array_to_rotate_right.rotate_right_once()
+        popped_item = array_to_rotate_right.pop()
+        assert popped_item == 2
+
+        array_to_rotate_right.rotate_right_once()
+        popped_item = array_to_rotate_right.pop()
+        assert popped_item == 3
+
+        assert array_to_rotate_right.to_list() == [1]
+
+        # array_to_rotate_left = CircularArray(size=3)
+        # each(array_to_rotate_left.append, [1, 2, 3])
+        #
+        # array_to_rotate_left.rotate_left_once()
+        # array_to_rotate_left.pop()
+        # array_to_rotate_left.rotate_left_once()
+        # array_to_rotate_left.pop()
+        #
+        # assert array_to_rotate_left.to_list() == [3]

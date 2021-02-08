@@ -1,6 +1,6 @@
 from typing import Any, List
 
-from errors import IndexOutOfBoundError, SizeLimitExceededError
+from errors import IndexOutOfBoundError, SizeLimitExceededError, EmptyArrayError
 
 
 class CircularArray:
@@ -33,6 +33,19 @@ class CircularArray:
 
         self.__items.append(item)
         self._pointers.append(len(self.__items) - 1)
+
+
+    def pop(self) -> Any:
+        if len(self.__items) <= 0:
+            raise EmptyArrayError
+
+        popped_item = self.__items.pop()
+        self.size -= 1
+        self._pointers = list(
+            map(lambda p: p - 1, self._pointers[1:])
+        )
+
+        return popped_item
 
 
     def rotate_left_once(self) -> None:
