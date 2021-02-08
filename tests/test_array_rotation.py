@@ -44,7 +44,7 @@ class TestArrayRotation:
         array = CircularArray(size=size)
         each(array.append, items)
 
-        assert array.clone() == items
+        assert array.to_list() == items
 
 
     def test_append(self):
@@ -67,7 +67,7 @@ class TestArrayRotation:
         assert array[4] == False
 
         array.append(None)
-        assert array[5] == None
+        assert array[5] is None
 
 
     def test_append_raises_error(self):
@@ -108,30 +108,60 @@ class TestArrayRotation:
     def test_rotate_right_once(self):
         items = [1, 2, 3]
         array = CircularArray(size=3)
-
         each(array.append, items)
 
         array.rotate_right_once()
-        assert array.clone() == [3, 1, 2]
+        assert array.to_list() == [3, 1, 2]
 
         array.rotate_right_once()
-        assert array.clone() == [2, 3, 1]
+        assert array.to_list() == [2, 3, 1]
 
         array.rotate_right_once()
-        assert array.clone() == [1, 2, 3]
+        assert array.to_list() == [1, 2, 3]
 
 
     def test_rotate_left_once(self):
         items = [1, 2, 3]
         array = CircularArray(size=3)
-
         each(array.append, items)
 
         array.rotate_left_once()
-        assert array.clone() == [2, 3, 1]
+        assert array.to_list() == [2, 3, 1]
 
         array.rotate_left_once()
-        assert array.clone() == [3, 1, 2]
+        assert array.to_list() == [3, 1, 2]
 
         array.rotate_left_once()
-        assert array.clone() == [1, 2, 3]
+        assert array.to_list() == [1, 2, 3]
+
+
+    @pytest.mark.parametrize('size, items, number_of_rotation, final_array', [
+        (5, [1, 2, 3, 4, 5], 3, [3, 4, 5, 1, 2]),
+        (1, ['test'], 2, ['test']),
+        (0, [], 10, []),
+        (5, [1, True, 'string', 3.1416, None], 3, ['string', 3.1416, None, 1, True]),
+    ])
+    def test_multiple_right_rotation(self, size, items, number_of_rotation, final_array):
+        array = CircularArray(size=size)
+        each(array.append, items)
+
+        for _ in range(number_of_rotation):
+            array.rotate_right_once()
+
+        assert array.to_list() == final_array
+
+
+    @pytest.mark.parametrize('size, items, number_of_rotation, final_array', [
+        (5, [1, 2, 3, 4, 5], 3, [4, 5, 1, 2, 3]),
+        (1, ['test'], 2, ['test']),
+        (0, [], 10, []),
+        (5, [1, True, 'string', 3.1416, None], 3, [3.1416, None, 1, True, 'string']),
+    ])
+    def test_multiple_right_rotation(self, size, items, number_of_rotation, final_array):
+        array = CircularArray(size=size)
+        each(array.append, items)
+
+        for _ in range(number_of_rotation):
+            array.rotate_left_once()
+
+        assert array.to_list() == final_array
