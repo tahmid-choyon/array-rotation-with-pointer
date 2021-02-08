@@ -11,16 +11,16 @@ class CircularArray:
 
 
     def __getitem__(self, index: int) -> Any:
-        return self.get(index)
-
-
-    def get(self, index: int) -> Any:
         if index >= len(self.__items):
             raise IndexOutOfBoundError
         return self.__items[self._pointers[index]]
 
 
-    def clone(self) -> List[Any]:
+    def get(self, index: int) -> Any:
+        return self.__getitem__(index)
+
+
+    def to_list(self) -> List[Any]:
         items = []
         for i in range(len(self.__items)):
             items.append(self.get(i))
